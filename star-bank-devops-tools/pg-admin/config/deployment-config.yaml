@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  namespace: star-bank-devops-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin-server
+  template:
+    metadata:
+      labels:
+        app: pgadmin-server
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 0
+      serviceAccountName: pgadmin-admin
+      containers:
+        - env:
+          - name: PGADMIN_DEFAULT_EMAIL
+            value: alexey.bakulin96@gmail.com
+          - name: PGADMIN_DEFAULT_PASSWORD
+            value: root
+          - name: PGADMIN_PORT
+            value: '80'
+          image: dpage/pgadmin4:6.15
+          imagePullPolicy: IfNotPresent
+          name: pgadmin
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              memory: 500Mi
+      

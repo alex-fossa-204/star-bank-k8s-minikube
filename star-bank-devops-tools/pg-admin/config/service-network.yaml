@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-network-service
+  name: pgadmin-network-service
   namespace: star-bank-devops-tools
   annotations:
       prometheus.io/scrape: 'true'
       prometheus.io/path:   /
-      prometheus.io/port:   '8080'
+      prometheus.io/port:   '80'
 spec:
   selector:
-    app: jenkins-server
+    app: pgadmin-server
   type: NodePort
   ports:
-    - port: 8080
-      targetPort: 8080
-      nodePort: 32000
+    - port: 80
+      targetPort: 80
+      nodePort: 32002
