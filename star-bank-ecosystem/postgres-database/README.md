@@ -1,0 +1,1 @@
+`setup k8s postgres kluster`(https://phoenixnap.com/kb/postgresql-kubernetes)

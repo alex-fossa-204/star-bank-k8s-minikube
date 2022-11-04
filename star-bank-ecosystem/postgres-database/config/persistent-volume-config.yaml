@@ -1,0 +1,44 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pg-local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pg-persistent-volume
+  labels:
+    type: local
+spec:
+  storageClassName: pg-local-storage
+  volumeMode: Filesystem
+  claimRef:
+    name: pg-persistent-volume-claim
+    namespace: star-bank-ns
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: 
+    path: /data/postgresql-pv/
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pg-persistent-volume-claim
+  namespace: star-bank-ns
+spec:
+  storageClassName: pg-local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  
+
+
+
