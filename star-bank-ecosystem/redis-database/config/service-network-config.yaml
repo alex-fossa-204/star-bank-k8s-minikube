@@ -17,5 +17,5 @@ spec:
     - port: 6379
       protocol: TCP
       targetPort: 6379
-      nodePort: 32003
+      nodePort: 32203
   sessionAffinity: None
