@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-network-service
+  namespace: star-bank-ns
+  labels:
+    name: redis-network-service
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/path:   /
+      prometheus.io/port:   '6379'
+spec:
+  selector:
+    app: redis-statefulset
+  type: NodePort
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+      nodePort: 32003
+  sessionAffinity: None

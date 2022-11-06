@@ -1,0 +1,82 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: redis-local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-persistent-volume-1
+  labels:
+    type: local
+spec:
+  storageClassName: redis-local-storage
+  volumeMode: Filesystem
+  claimRef:
+    name: redis-persistent-volume-claim
+    namespace: star-bank-ns
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: 
+    path: /data/redis-pv-1/
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-persistent-volume-2
+  labels:
+    type: local
+spec:
+  storageClassName: redis-local-storage
+  volumeMode: Filesystem
+  claimRef:
+    name: redis-persistent-volume-claim
+    namespace: star-bank-ns
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: 
+    path: /data/redis-pv-2/
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-persistent-volume-3
+  labels:
+    type: local
+spec:
+  storageClassName: redis-local-storage
+  volumeMode: Filesystem
+  claimRef:
+    name: redis-persistent-volume-claim
+    namespace: star-bank-ns
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: 
+    path: /data/redis-pv-3/
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-persistent-volume-claim
+  namespace: star-bank-ns
+spec:
+  storageClassName: redis-local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

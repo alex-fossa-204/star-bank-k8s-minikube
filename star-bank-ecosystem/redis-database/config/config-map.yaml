@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: star-bank-ns
+  labels:
+    app: redis-server
+data:
+  redis.conf: |
+    masterauth root
+    requirepass root
